@@ -1,5 +1,16 @@
 <template>
 <div>
+	<div class="pageturning">
+	<el-pagination
+		@size-change="handleSizeChange"
+		@current-change="handleCurrentChange"
+		:current-page="currentPage"
+		:page-sizes="[10, 20, 50, 100]"
+		:page-size="pagesize"
+		layout="total, sizes, prev, pager, next, jumper"
+		:total="data.length">
+	</el-pagination>
+	</div>
 	<div id="todayInfo">
 		<el-table
 			:data="data.slice((currentPage-1)*pagesize,currentPage*pagesize)"
@@ -86,17 +97,6 @@
 				align="center">
 			</el-table-column>
 		</el-table>
-	</div>
-	<div class="pageturning">
-		<el-pagination
-			@size-change="handleSizeChange"
-			@current-change="handleCurrentChange"
-			:current-page="currentPage"
-			:page-sizes="[10, 20, 50, 100]"
-			:page-size="pagesize"
-			layout="total, sizes, prev, pager, next, jumper"
-			:total="data.length">
-		</el-pagination>
 	</div>
 </div>
 </template>
