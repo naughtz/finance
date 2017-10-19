@@ -1,6 +1,9 @@
 .DS_Store
-node_modules/
-dist/
+node_modules
+dist/__pycache__
+dist/static
+dist/index.html
+dist/test.py
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
