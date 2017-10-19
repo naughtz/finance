@@ -1,6 +1,6 @@
 <template>
 <div>
-	<span></span>
+	<div style="text-align: left;"><span>欢迎您，{{user}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<el-button type="text" @click="logout()">注销</el-button></div>
 	<div class="header">
 		<el-menu :default-active="activeIndex" mode="horizontal" @select="handleSelect">
 			<el-menu-item index="1">个人中心</el-menu-item>
@@ -18,6 +18,7 @@ export default {
 name: 'finance',
 data () {
 	return {
+		user: '',
 		activeIndex: 1,
 
     }
@@ -28,7 +29,7 @@ created: function () {
 		url:'/ajax/ifLogin',
 		}).then(function(response){
 			if (response.body.state=="true") {
-				
+				this.user = response.body.user;
 			}
 			else {
 				this.$router.push({path: '/login'});
@@ -38,12 +39,28 @@ created: function () {
 methods: {
 	handleSelect: function (key) {
 		if ( key == 1 ) {
-			this.$router.push({path: '/finance/userinfo'});
+			this.$router.push({path: '/finance/userinfo',query: {"user": this.user}});
 		}
 		else if ( key == 2 ) {
 			this.$router.push({path: '/finance/todayinfo'});
 		}
 	},
+	logout: function () {
+		this.$http({
+		method:'POST',
+		url:'/ajax/logout',
+		params: {
+				user:this.user,
+			}
+		}).then(function(response){
+			if (response.body.result=="true") {
+				this.$router.push({path: '/login'});
+			}
+			else {
+				
+			}
+		})
+	}
 }
 
 

@@ -12,6 +12,9 @@ import numpy
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
+sqluser = "root"
+sqlpasswd = "sjkzyflzsz"
+
 class indexHandler(tornado.web.RequestHandler):
 	def get(self):#进入首页
 		self.render(os.path.join(BASE_DIR, "index.html"))  #进入首页
@@ -25,10 +28,12 @@ class ifLoginHandler(tornado.web.RequestHandler):  #判断登录状态
 			r = redis.Redis(host='127.0.0.1', port=6379)
 			md = hashlib.md5()
 			md.update(user.encode("utf-8"))
-			session = md.hexdigest()
-			if session == r.get(user).decode():  #判断与redis中存储的信息是否一致
-				result = {"state":"true"}
-				self.write(result)
+			usermd = md.hexdigest()
+			session = r.get(user)
+			if session:
+				if usermd == session.decode():  #判断与redis中存储的信息是否一致
+					result = {"state":"true","user":user}
+					self.write(result)
 		else:
 			result = {"state":"false"}
 			self.write(result)
@@ -39,13 +44,14 @@ class loginHandler(tornado.web.RequestHandler):
 		connect = pymysql.Connect(
 	    host='localhost',
 	    port=3306,
-	    user='root',
-	    passwd='sjkzyflzsz',
+	    user=sqluser,
+	    passwd=sqlpasswd,
 	    db='finance',
 	    charset='utf8'
 		)
 	 	#获取游标
 		cursor = connect.cursor()
+
 		#查找数据
 		sql = "select passwd from userinfo where user = %s"
 		data = (user)
@@ -83,8 +89,42 @@ class loginHandler(tornado.web.RequestHandler):
 		md.update(user.encode("utf-8"))
 		session = md.hexdigest()
 		r = redis.Redis(host='127.0.0.1', port=6379)
-		r.set(user,session,ex=900)    #redis中缓存登录状态
-		self.set_secure_cookie('finance_user', user, expires=time.time()+900)  #cookie中存储用户名，有效时间15分钟
+		r.set(user,session,ex=3600)    #redis中缓存登录状态
+		self.set_secure_cookie('finance_user', user, expires=time.time()+3600)  #cookie中存储用户名，有效时间一小时
+
+#注销
+class logoutHandler(tornado.web.RequestHandler):
+	def post(self):
+		user = self.get_argument('user')
+		r = redis.Redis(host='127.0.0.1', port=6379)
+		r.expire(user,0)
+		self.write({"result":"true"})
+		print(user,"logout")
+
+#获得用户信息
+class userdataHandler(tornado.web.RequestHandler):
+	def post(self):
+		user = self.get_argument('user')
+		connect = pymysql.Connect(
+	    host='localhost',
+	    port=3306,
+	    user=sqluser,
+	    passwd=sqlpasswd,
+	    db='finance',
+	    charset='utf8'
+		)
+	 	#获取游标
+		cursor = connect.cursor()
+		#查找数据
+		sql = "select choose from userinfo where user = %s"
+		data = (user)
+		sta = cursor.execute(sql,data)
+		cursor.close()
+		 #关闭数据库连接
+		connect.close()
+		result = cursor.fetchall()
+		self.write({"result": result, "state": "true"})
+
 
 class todayInfoHandler(tornado.web.RequestHandler):
 	def post(self):

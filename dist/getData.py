@@ -3,6 +3,8 @@ import datetime
 import numpy
 import pymysql.cursors
 
+sqluser="root"
+sqlpasswd="sjkzyflzsz"
 
 def getDateLine():
 	end=datetime.datetime.now()
@@ -15,8 +17,8 @@ def getDateLine():
 	connect = pymysql.Connect(
 		    host='localhost',
 		    port=3306,
-		    user='root',
-		    passwd='sjkzyflzsz',
+		    user=sqluser,
+		    passwd=sqlpasswd,
 		    db='finance',
 		    charset='utf8'
 		)
@@ -57,8 +59,8 @@ def getTodayInfo():
 	connect = pymysql.Connect(
 		    host='localhost',
 		    port=3306,
-		    user='root',
-		    passwd='sjkzyflzsz',
+		    user=sqluser,
+		    passwd=sqlpasswd,
 		    db='finance',
 		    charset='utf8'
 		)
