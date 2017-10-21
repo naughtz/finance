@@ -1,30 +1,10 @@
-# finance
-
-> A Vue.js project
-
-## Build Setup
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+#这是使用vue和tornado框架编写的基于金融数据的数据可视化网站。
+#使用方法
+##安装好相应环境后，将dist文件夹下载，打开fidata.py，修改mysql用户名和密码。再运行init.py进行初始化操作，然后就能运行main.py，注册账号后即可使用。
+#基本功能
+##注册
+##登录
+##用户可以增删改查自己的自选股
+##用户可以看到当前A股市场的信息概览
+##用户可以看到当前自选股的信息概览
+##用户可以看到特定一支股票的K线数据(日线数据，以K线展示)
