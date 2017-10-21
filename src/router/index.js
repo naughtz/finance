@@ -4,6 +4,8 @@ import login from '@/components/login'
 import finance from '@/components/finance'
 import userinfo from '@/components/userinfo'
 import todayinfo from '@/components/todayinfo'
+import kline from '@/components/kline'
+import register from '@/components/register'
 
 Vue.use(Router)
 
@@ -12,6 +14,11 @@ export default new Router({
     {
       path: '/',
       redirect:'/finance',
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: register,
     },
     {
       path: '/finance',
@@ -27,6 +34,11 @@ export default new Router({
         path: 'todayinfo',
         name: 'todayinfo',
         component: todayinfo,
+      },
+      {
+        path: 'kline',
+        name: 'kline',
+        component: kline,
       }
       ]
     },

@@ -1,0 +1,2 @@
+sqluser = 'root'
+sqlpasswd = 'sjkzyflzsz'

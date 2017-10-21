@@ -15,6 +15,7 @@
 			</el-form-item>
 			<el-form-item>
 			<el-button type="primary" @click="login">登录</el-button>
+			<el-button @click="register">注册</el-button>
 			<p class="message">{{message}}</p>
 			</el-form-item>
 		</el-form>
@@ -61,6 +62,9 @@ methods: {
 				this.message = "用户名或密码错误";
 			}
 		})
+	},
+	register: function () {
+		this.$router.push({path: '/register'});
 	}
   }
 }

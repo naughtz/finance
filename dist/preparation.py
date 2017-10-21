@@ -1,13 +1,13 @@
 import pymysql.cursors
 import redis
-
+from fidata import sqluser,sqlpasswd
 
 def readTodayInfo():#将todayinfo缓存入redis
 	connect = pymysql.Connect(
     host='localhost',
     port=3306,
-    user='root',
-    passwd='sjkzyflzsz',
+    user=sqluser,
+    passwd=sqlpasswd,
     db='finance',
     charset='utf8',
 	cursorclass=pymysql.cursors.DictCursor

@@ -1,6 +1,6 @@
 import os
 import tornado.web
-from webAPI import indexHandler,loginHandler,logoutHandler,ifLoginHandler,todayInfoHandler,userdataHandler
+from webAPI import indexHandler,loginHandler,logoutHandler,ifLoginHandler,todayInfoHandler,userdataHandler,changechHandler,klineHandler,registerHandler
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -16,7 +16,10 @@ HANDLERS = [
     (r"/ajax/todayInfo", todayInfoHandler),
     (r"/ajax/login", loginHandler),
     (r"/ajax/logout", logoutHandler),
-    (r"/ajax/userdata", userdataHandler)
+    (r"/ajax/userdata", userdataHandler),
+    (r"/ajax/changech", changechHandler),
+    (r"/ajax/kline", klineHandler),
+    (r"/ajax/register", registerHandler),
 ]
 
 UI_MODULES={

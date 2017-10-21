@@ -5,6 +5,7 @@
 		<el-menu :default-active="activeIndex" mode="horizontal" @select="handleSelect">
 			<el-menu-item index="1">个人中心</el-menu-item>
 			<el-menu-item index="2">A股概览</el-menu-item>
+			<el-menu-item index="3">查看K线图</el-menu-item>
 		</el-menu>
 	</div>
 	<div class="main">
@@ -43,6 +44,9 @@ methods: {
 		}
 		else if ( key == 2 ) {
 			this.$router.push({path: '/finance/todayinfo'});
+		}
+		else if ( key == 3 ) {
+			this.$router.push({path: '/finance/kline'});
 		}
 	},
 	logout: function () {
